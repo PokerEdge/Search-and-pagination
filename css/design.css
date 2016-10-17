@@ -39,6 +39,9 @@ body{
       border: 1px solid #eaeaea;
       padding: 8px 15px;
       font-size: 14px;
+
+      /*fixed styling to look like example page*/
+      margin-left: 4px;
       background-color: #4ba6c3;
       color: #fff
     }
@@ -50,6 +53,14 @@ body{
     padding: 0 0 20px 0;
     border-bottom: 1px solid #eaeaea;
   }
+  
+  /*  Edit to add back +11 immediately after n  */
+  .student-item.cf:nth-of-type(n+11) {
+    display: none;
+  }
+
+ /* Opposite of 'none' is 'block'? */
+ 
 
     .student-details{
       width: 50%;
@@ -110,6 +121,9 @@ body{
       padding: 3px 8px;
       text-decoration: none;
       color: #4ba6c3;
+
+      /*fixed styling to look like main page*/
+      margin: 0 3px;
     }
 
     .pagination li a.active,
