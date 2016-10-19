@@ -38,27 +38,50 @@ $(function(){
 
 });
 
+//SHOULD WE INITIALIZE AND PAGINATE?
+
+var searchResultArray = [];
+
 //Calculate and display the total number of page links given a number of student list elements
 function paginate(){
 
 	//Good for intialization, but what about search refined list element sizes? maybe 
 	//**** if input.val().length === 0, else search(), which redefines numShownElements based on input text
 
-	var numShownElements = $(".student-list").children().length;
+	//THIS NUMBER SHOULD BE WHAT IS RETURNED BY SEARCH AND START AT THE FULL LIST LENGTH AND 
+		//BE RESET IF INPUT IS EMPTY
+	var numShownElements;
+
+	if ($(".student-list").children().length > searchResultArray.length || searchResultArray.length === undefined){
+
+		numShownElements = $(".student-list").children().length;
+	
+	}else{
+
+		numShownElements = searchResultArray.length;
+
+	}
+
+
+	// var numSearchedElements;
+
+	// numSearchedElements = searchResultArray.length;
+
+	console.log(searchResultArray);
 
 	var lastPageNumber;
 	var currentPageNumber = 1;
 
-	//Find number of showing student list elements and assign it to a variable
+	//Get LIST of of SHOWING student list elements and assign it to a variable
 	var shownElements; // = ?????
 
 	//Calculate total number of page elements given number (length) of student list elements (that meet search criteria)
 	var totalPages = Math.ceil(numShownElements/10);
 
-	var $listItem = $("<li></li>")
+	var $listItem = $("<li></li>");
 	var $anchorItem;
 
-	//$(".pagination").detach();
+	$(".pagination").detach();
 
 	//Dynamically append "pagination" class unordered list to "page" element
 	$(".page").append('<div class = "pagination"></div>');
@@ -114,6 +137,7 @@ function paginate(){
 
 		$(".pagination a").eq(0).addClass("active");
 	}
+//End of paginate()	
 }
 
 //Search and return a string within student list elements and hide or show matching student list elements
@@ -122,17 +146,50 @@ function search(){
 	//Check to see if string within input element matches text within student list elements
 		//Select "input" element
 	var $input = $(".student-search input");
-		//Get "input" text
+		//Get "input" text to check with conditional vs student element text using indexOf()
 	console.log($input.val());
+
+	//Get user names
+  	$userNames = $(".student-details h3");
+
+  	//Get emails
+ 	$emails = $("span.email");
 		//Loop through and hide all student list elements
 		//Loop with if statement: if student list element matches, or if does not match, show element
 		//return list of shown elements as a varaible to use in paginate() and in displayElements()
 
+	    
+	//Perform search functionality
 
-		//Call paginate with argument of new list size based on number, or indices?, of search results
+// //***** HERE IS WHERE TO RESTART ***** SHOULD THIS BE A SEPARATE FUNCTION?
 
-	//return curratedList comprised of i elements, a variable that can be used to paginate and to display 
-	//matching shown elements
+	var searchResultArray = [];
+	for(var i = 0; i < $(".student-list").children().length; i++){
+
+	    $(".student-list li").eq(i).hide();
+
+	    //Search for matches to entered (sub)string within the "input" element when search button is clicked
+	    if($userNames.eq(i).text().toLowerCase().indexOf($input.val().toLowerCase()) !== -1 || $emails.eq(i).text().toLowerCase().indexOf($input.val().toLowerCase()) !== -1){
+
+	      //If non-case sensitive 'input' text matches .student-list element text, then results are shown
+	      $(".student-list li").eq(i).show();
+	          
+	      //***** searchResultCount is new studentListSize to be used in new pagination function call
+	      //Don't need the entire element, we just need a list of indices... also an array, but the length and the 
+	      	//elements are already sub-parts of student-list, so restoring the values seems superfluous
+	      	//Maybe use if that index filled variable is < student-list then perform paginate with
+	      		//index filled virable's elements, else if === 0 display message, else intialize the page
+	      searchResultArray += [i];//$(".student-list li").eq(i);
+
+	      
+	    }
+
+	}
+
+	//Call paginate with argument of new list size based on number, or indices?, of search results
+
+	console.log("Search result count is " + searchResultArray.length);
+	return paginate(searchResultArray);
 
 }
 
