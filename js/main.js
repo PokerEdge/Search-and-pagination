@@ -45,9 +45,6 @@ var searchResultArray = [];
 //Calculate and display the total number of page links given a number of student list elements
 function paginate(){
 
-	//Good for intialization, but what about search refined list element sizes? maybe 
-	//**** if input.val().length === 0, else search(), which redefines numShownElements based on input text
-
 	//THIS NUMBER SHOULD BE WHAT IS RETURNED BY SEARCH AND START AT THE FULL LIST LENGTH AND 
 		//BE RESET IF INPUT IS EMPTY
 	var numShownElements;
@@ -62,10 +59,6 @@ function paginate(){
 
 	}
 
-
-	// var numSearchedElements;
-
-	// numSearchedElements = searchResultArray.length;
 
 	console.log(searchResultArray);
 
@@ -160,9 +153,6 @@ function search(){
 
 	    
 	//Perform search functionality
-
-// //***** HERE IS WHERE TO RESTART ***** SHOULD THIS BE A SEPARATE FUNCTION?
-
 	var searchResultArray = [];
 	for(var i = 0; i < $(".student-list").children().length; i++){
 
