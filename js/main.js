@@ -27,6 +27,8 @@ library plugins.
 
 */
 
+var searchResultArray = [];
+
 //On ready, dynamically add input element and search button at the proper place(s) in the HTML index
 $(function(){
 
@@ -40,7 +42,7 @@ $(function(){
 
 
 //Calculate and display the total number of page links given a number of student list elements
-function intialize(searchResultArray){
+function intialize(){
 
 	//THIS NUMBER SHOULD BE WHAT IS RETURNED BY SEARCH AND START AT THE FULL LIST LENGTH AND 
 		//BE RESET IF INPUT IS EMPTY
@@ -142,7 +144,7 @@ function paginate(){
 
 	//INSERT CODE FROM ANONYMOUS FUNCTION WITHIN INITIALIZE() SO THAT PAGINATE WORKS TO INITILIALIZE AND TO 
 	//UPDATE PAGINATION ANCHOR ELEMENTS
-	
+
 }
 
 //Search and return a string within student list elements and hide or show matching student list elements
@@ -165,7 +167,7 @@ function search(){
 
 	    
 	//Perform search functionality
-	var searchResultArray = [];
+
 	for(var i = 0; i < $(".student-list").children().length; i++){
 
 	    $(".student-list li").eq(i).hide();
@@ -191,7 +193,7 @@ function search(){
 
 	//Call paginate with argument of new list size based on number, or indices?, of search results
 
-	console.log("Search result count is " + searchResultArray.length);
+	console.log("Search result count is " + searchResultArray);
 	// return paginate(searchResultArray);
 
 	// return searchResultArray; //Should be this but need to separate the paginate and intialize functions
