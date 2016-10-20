@@ -38,29 +38,30 @@ $(function(){
 
 });
 
-//SHOULD WE INITIALIZE AND PAGINATE?
-
-var searchResultArray = [];
 
 //Calculate and display the total number of page links given a number of student list elements
-function paginate(){
+function intialize(searchResultArray){
 
 	//THIS NUMBER SHOULD BE WHAT IS RETURNED BY SEARCH AND START AT THE FULL LIST LENGTH AND 
 		//BE RESET IF INPUT IS EMPTY
 	var numShownElements;
 
-	if ($(".student-list").children().length > searchResultArray.length || searchResultArray.length === undefined){
+	var numSearched;
+
+	// //Create number of searched elements, if array exists
+	// for(var h = 0; h < )
+
+	// if ($(".student-list").children().length > searchResultArray.length || searchResultArray.length === undefined){
 
 		numShownElements = $(".student-list").children().length;
 	
-	}else{
+	// }
+	// else{
 
-		numShownElements = searchResultArray.length;
+		// numShownElements = searchResultArray.length;
 
-	}
+	// }
 
-
-	console.log(searchResultArray);
 
 	var lastPageNumber;
 	var currentPageNumber = 1;
@@ -130,7 +131,18 @@ function paginate(){
 
 		$(".pagination a").eq(0).addClass("active");
 	}
-//End of paginate()	
+
+//End of initialize()	
+}
+
+//Displays n number of student-list elements per page element (for this project, n = 10)
+function paginate(){
+	
+	var n = 10;
+
+	//INSERT CODE FROM ANONYMOUS FUNCTION WITHIN INITIALIZE() SO THAT PAGINATE WORKS TO INITILIALIZE AND TO 
+	//UPDATE PAGINATION ANCHOR ELEMENTS
+	
 }
 
 //Search and return a string within student list elements and hide or show matching student list elements
@@ -169,19 +181,23 @@ function search(){
 	      	//elements are already sub-parts of student-list, so restoring the values seems superfluous
 	      	//Maybe use if that index filled variable is < student-list then perform paginate with
 	      		//index filled virable's elements, else if === 0 display message, else intialize the page
-	      searchResultArray += [i];//$(".student-list li").eq(i);
+	      searchResultArray.push($(".student-list li").eq(i));
 
 	      
 	    }
+	    // else(){$(NON SEARCH INDEXED ELEMENTS).slideUp();}
 
 	}
 
 	//Call paginate with argument of new list size based on number, or indices?, of search results
 
 	console.log("Search result count is " + searchResultArray.length);
-	return paginate(searchResultArray);
+	// return paginate(searchResultArray);
+
+	// return searchResultArray; //Should be this but need to separate the paginate and intialize functions
 
 }
+
 
 //Hide and show search() function returned list of elements that are paginated
 function displayElements(){
@@ -194,4 +210,11 @@ function displayElements(){
 	//paginate() the curated student list elements
 }
 
-paginate();
+intialize();
+
+
+/*** ANIMATION EXAMPLE ***/
+
+// $( "p" ).click(function() {
+//   $( this ).slideUp();
+// });
