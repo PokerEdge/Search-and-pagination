@@ -27,48 +27,44 @@ library plugins.
 
 */
 
+//NEEDS TO BE SET EACH TIME SEARCH IS PERFORMED
 var searchResultArray = [];
 
-//On ready, dynamically add input element and search button at the proper place(s) in the HTML index
+var numShownElements;
+
+
+//On ready, dynamically add 'input' element and search 'button' at the proper places within the HTML index
 $(function(){
 
 	//
 	$(".page-header.cf").append("<div class='student-search'><input placeholder='Search for students...'><button>Search</button>");
 
-	//
+	//On click of search button, search() returns the searchResultArray that has been populated with results
+	//based on user text input within 'input' text field at the time of the user's click
 	$(".student-search button").click(function(){ search(); });
 
 });
 
 
 //Calculate and display the total number of page links given a number of student list elements
-function intialize(){
+function init(arr){
 
-	//THIS NUMBER SHOULD BE WHAT IS RETURNED BY SEARCH AND START AT THE FULL LIST LENGTH AND 
-		//BE RESET IF INPUT IS EMPTY
-	var numShownElements;
-
-	var numSearched;
-
-	// //Create number of searched elements, if array exists
-	// for(var h = 0; h < )
-
-	// if ($(".student-list").children().length > searchResultArray.length || searchResultArray.length === undefined){
+	if (searchResultArray.length === 0){
 
 		numShownElements = $(".student-list").children().length;
 	
-	// }
-	// else{
+	}
+	else{
 
-		// numShownElements = searchResultArray.length;
+		numShownElements = searchResultArray.length;
 
-	// }
+	}
 
-
+//MAKE INTO GLOBAL VARIABLES SO THAT THEY WORK IN BOTH INITIALIZE AND PAGINATE?
 	var lastPageNumber;
 	var currentPageNumber = 1;
 
-	//Get LIST of of SHOWING student list elements and assign it to a variable
+	//Get LIST of of SHOWING student list elements and assign it to a variable - this will be array.length
 	var shownElements; // = ?????
 
 	//Calculate total number of page elements given number (length) of student list elements (that meet search criteria)
@@ -91,8 +87,11 @@ function intialize(){
 		$(".pagination").append($pageUl);
 		
 		//Bind click handler to each page anchor element
-		//Create function displayElements() and pass it the value "$this" ?
+		//DOES THIS NEED TO POINT TO AN ANONYMOUS FUNCTION OR CAN IT SIMPLY CALL PAGINATE? WHAT ABOUT ANIAMTIONS?
 		$anchorItem.click(function(){
+
+			//Outstanding issue is the management of lastPageNumber and currentPageNumber variable scope. 
+				//Need to be global?
 
 			//On click, use anonymous function anchor elements have class "active" added to 
 			//$this or removed from other anchors
@@ -118,6 +117,7 @@ function intialize(){
 			  $(".student-list li").eq(i).hide();
 			      
 			  //Find student-list elements matching with clicked pagination anchor element
+			  //REPLACE STUDENT LIST LI WITH THE RETURNED ARRAY
 			  if(i >= startIndex && i < endIndex){
 			    $(".student-list li").eq(i).show();
 			  }
@@ -132,18 +132,45 @@ function intialize(){
 		$anchorItem.appendTo($listItem);
 
 		$(".pagination a").eq(0).addClass("active");
+
 	}
 
-//End of initialize()	
+	//Reset numShownElements for next post-search init() call
+	numShownElements = $(".student-list").children().length;
+
 }
 
 //Displays n number of student-list elements per page element (for this project, n = 10)
-function paginate(){
+//Elements come from search() results and are elements stored within the searchResultsArray
+function paginate(arrayElementsFromSearch){
 	
 	var n = 10;
 
+
+	console.log(search());
+
+	console.log(searchResultArray.length);
+	//returned array.length creates new indecies for what is NOW in the init() function
+
+	//init();
+
+
+
+	// for(var i = 0; i < $(".student-list").children().length; i++){
+	// 		  $(".student-list li").eq(i).hide();
+	// }
+
+	// for(var j = 0; j < testArray.length; j++){
+
+	// 	// $(".student-list li").eq(testArray[j]).show();
+
+	// }
 	//INSERT CODE FROM ANONYMOUS FUNCTION WITHIN INITIALIZE() SO THAT PAGINATE WORKS TO INITILIALIZE AND TO 
 	//UPDATE PAGINATION ANCHOR ELEMENTS
+
+	//The arguments object contains an array of the arguments used when the function was called (invoked).
+
+    //This way you can simply use a function to find (for instance) the highest value in a list of numbers:
 
 }
 
@@ -165,7 +192,9 @@ function search(){
 		//Loop with if statement: if student list element matches, or if does not match, show element
 		//return list of shown elements as a varaible to use in paginate() and in displayElements()
 
-	    
+//Stores indices of all elements for which user searches
+	searchResultArray = [];
+
 	//Perform search functionality
 
 	for(var i = 0; i < $(".student-list").children().length; i++){
@@ -183,7 +212,10 @@ function search(){
 	      	//elements are already sub-parts of student-list, so restoring the values seems superfluous
 	      	//Maybe use if that index filled variable is < student-list then perform paginate with
 	      		//index filled virable's elements, else if === 0 display message, else intialize the page
-	      searchResultArray.push($(".student-list li").eq(i));
+	      
+	      //Should populate array with indices to be used to paginate() search results
+	      // searchResultArray.push($(".student-list li").eq(i));
+	      searchResultArray.push(i);
 
 	      
 	    }
@@ -193,17 +225,22 @@ function search(){
 
 	//Call paginate with argument of new list size based on number, or indices?, of search results
 
-	console.log("Search result count is " + searchResultArray);
+	// console.log("Search result count is " + searchResultArray);
 	// return paginate(searchResultArray);
 
-	// return searchResultArray; //Should be this but need to separate the paginate and intialize functions
+	//paginate();
+
+	//Should return undefined if there are no search results, since it starts with length of 0 - SO MESSAGE CAN BE CHECKED
+	return init(searchResultArray); 
 
 }
 
-
+/*** SHOW MESSAGE EXTRA CREDIT PART ***/
 //Hide and show search() function returned list of elements that are paginated
-function displayElements(){
+function noResultsMessage(){
 
+	//remove message HTML from .page element at beginning of function
+	//If search returns array with length 0, then insert HTML for message into the app appended to .page
 	//Hide all student list elements
 	//Show curated student list elements, those that correspond to search()
 
@@ -212,7 +249,14 @@ function displayElements(){
 	//paginate() the curated student list elements
 }
 
-intialize();
+init();
+
+//search('keyup', paginate(searchResultArray));
+
+//syntax may be incorrect to call paginate after search function is called on 
+	//keyup event on input element
+
+
 
 
 /*** ANIMATION EXAMPLE ***/
