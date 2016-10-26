@@ -115,6 +115,7 @@ function init(arr){
 
 			//Hide all list elements
 			for(var i = 0; i < $(".student-list").children().length; i++){
+			  
 			  $(".student-list li").eq(i).hide();
 
 			  //if elements hidden = children().length, then use $studentlist index, else increment searchResultsArray index
@@ -124,7 +125,8 @@ function init(arr){
 			  //******************* REPLACE STUDENT LIST LI WITH THE RETURNED ARRAY
 			  if(i >= startIndex && i < endIndex){
 
-			  	//******************* THIS PART SHOULD CHANGE TO BE searchResultsArray ?
+			  	//******************* THIS PART SHOULD CHANGE TO BE searchResultsArray ? CONDITIONAL?
+			  		//Maybe change the CSS properties to/from hidden to block/display
 			  	$(".student-list li").eq(i).show();
 			  }
 			}
@@ -209,12 +211,12 @@ function search(){
 
 	for(var i = 0; i < $(".student-list").children().length; i++){
 
-	    $(".student-list li").eq(i).hide();
+	    // $(".student-list li").eq(i).hide();
 
 	    //Search for matches to entered (sub)string within the "input" element when search button is clicked
 	    if($userNames.eq(i).text().toLowerCase().indexOf($input.val().toLowerCase()) !== -1 || $emails.eq(i).text().toLowerCase().indexOf($input.val().toLowerCase()) !== -1){
 
-	      //HERE ALL RESULTS ARE SHOWN ON ONE PAGE, BUT NONE ARE PAGINATED - GIVE START AND END INDICES GLOBAL SCOPE
+	      //BECAUSE THIS IS REDUNDANT AND AN INDEX CHECK... IF NONE ARE SHOWN, COULD DISPLAY MESSAGE AND USE THAT FUNCTION HERE
 	      if(i >= startIndex && i < endIndex){
 
 			  	//******************* THIS PART SHOULD CHANGE TO BE searchResultsArray ?

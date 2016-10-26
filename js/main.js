@@ -1,4 +1,3 @@
-
 var searchResultArray = [];
 
 var numShownElements;
@@ -9,7 +8,6 @@ var endIndex;
 
 
 $(function(){
-
 
 	$(".page-header.cf").append("<div class='student-search'><input placeholder='Search for students...'><button>Search</button>");
 
@@ -24,19 +22,19 @@ function init(arr){
 
 	if (searchResultArray.length === 0){
 
-		numShownElements = $(".student-list").children().length;
+		numShownElements = $(".student-list").children();
 	
 	}
 	else{
 
-		numShownElements = searchResultArray.length;
+		numShownElements = searchResultArray;
 
 	}
 
 	var lastPageNumber;
 	var currentPageNumber = 1;
 
-	var totalPages = Math.ceil(numShownElements/10);
+	var totalPages = Math.ceil(numShownElements.length/10);
 
 	var $listItem = $("<li></li>");
 	var $anchorItem;
@@ -47,7 +45,7 @@ function init(arr){
 	var $pageUl = $("<ul></ul>");
 
 	for(var j = 0; j < totalPages; j++){
-
+	
 		$anchorItem = $('<a href="#">' + (j+1) + '</a>');
 
 		$(".pagination").append($pageUl);
@@ -57,7 +55,6 @@ function init(arr){
 			$(".pagination a").removeClass("active");
 			$(this).addClass("active");
 
-
 			lastPageNumber = currentPageNumber;
 
 			currentPageNumber = parseInt($(this).text());
@@ -66,12 +63,13 @@ function init(arr){
 
 			endIndex = currentPageNumber * 10;
 
-			for(var i = 0; i < $(".student-list").children().length; i++){
-			  $(".student-list li").eq(i).hide();
+			for(var i = 0; i < numShownElements.length; i++){
+			  
+			  numShownElements[i].style.display = "none";
 
 			  if(i >= startIndex && i < endIndex){
 
-			  	$(".student-list li").eq(i).show();
+			  	numShownElements[i].style.display = "block";
 			  }
 			}
 
@@ -84,45 +82,43 @@ function init(arr){
 
 	}
 
-
-	numShownElements = $(".student-list").children().length;
-
 }
 
 
 function search(){
 
+
 	var $input = $(".student-search input");
+
+	//Logs the 'input' value to the console
+	console.log($input.val());
+
 
   	$userNames = $(".student-details h3");
 
  	$emails = $("span.email");
 
  	searchResultArray = [];
+	
 
 	for(var i = 0; i < $(".student-list").children().length; i++){
 
-	    $(".student-list li").eq(i).hide();
-
 	    if($userNames.eq(i).text().toLowerCase().indexOf($input.val().toLowerCase()) !== -1 || $emails.eq(i).text().toLowerCase().indexOf($input.val().toLowerCase()) !== -1){
 
-	      if(i >= startIndex && i < endIndex){
+			$(".student-list li").eq(i).show();
+	        
+	      	searchResultArray.push(i);
 
-			  	$(".student-list li").eq(i).show();
-			  }
-	        
-	        
-	      searchResultArray.push(i);
+	      // searchResultArray[i].style.display = "block";
 
 	    }
 
 	}
 
-
 	console.log("Search result count is " + searchResultArray.length);
 
 	return init(searchResultArray); 
+
 }
 
 init();
-
