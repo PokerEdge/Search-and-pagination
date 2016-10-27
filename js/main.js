@@ -2,9 +2,9 @@ var searchResultArray = [];
 
 var numShownElements = [];
 
-var startIndex;
+// var startIndex;
 
-var endIndex;
+// var endIndex;
 
 
 $(function(){
@@ -63,19 +63,24 @@ function init(arr){
 
 			currentPageNumber = parseInt($(this).text());
 
-			startIndex = currentPageNumber * 10 - 10;
+			var startIndex = currentPageNumber * 10 - 10;
 
-			endIndex = currentPageNumber * 10;
+			var endIndex = currentPageNumber * 10;
 
-			for(var i = 0; i < $('.student-list').children().length; i++){
+			$('.student-list').children().hide();
 
-			$('.student-list').eq(i).hide();  
+			for(var i = 0; i < numShownElements.length; i++){ 
 			
-			if(i >= startIndex && i < endIndex && i < 9){
+			console.log(startIndex + " " + endIndex);
+			if(i >= startIndex && i < endIndex){
 
-			  	$('.student-list').eq(numShownElements[i]).show();
+				console.log(numShownElements[i]);
+
+			  	$('.student-list').children().eq(numShownElements[i]).show();
+			  	//Add counter here to check for no results displayed
 
 			}
+		}
 
 		});
 
