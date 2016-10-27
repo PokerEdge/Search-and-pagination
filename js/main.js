@@ -1,6 +1,6 @@
 var searchResultArray = [];
 
-var numShownElements;
+var numShownElements = [];
 
 var startIndex;
 
@@ -13,7 +13,7 @@ $(function(){
 
 	$(".student-search button").click(function(){ search(); });
 
-	$(".student-search input").keyup(function(){ search(); });
+	// $(".student-search input").keyup(function(){ search(); });
 
 });
 
@@ -22,8 +22,12 @@ function init(arr){
 
 	if (searchResultArray.length === 0){
 
-		numShownElements = $(".student-list").children();
-	
+		//EDIT SO THAT BOTH POSSIBILITIES OF numShownElements ARE ARRAYS POPULATED WITH INDEX NUMBERS
+		for(var a = 0; a < $(".student-list").children().length; a++){
+			
+			numShownElements.push(a);
+		}
+		
 	}
 	else{
 
@@ -63,14 +67,14 @@ function init(arr){
 
 			endIndex = currentPageNumber * 10;
 
-			for(var i = 0; i < numShownElements.length; i++){
-			  
-			  numShownElements[i].style.display = "none";
+			for(var i = 0; i < $('.student-list').children().length; i++){
 
-			  if(i >= startIndex && i < endIndex){
+			$('.student-list').eq(i).hide();  
+			
+			if(i >= startIndex && i < endIndex && i < 9){
 
-			  	numShownElements[i].style.display = "block";
-			  }
+			  	$('.student-list').eq(numShownElements[i]).show();
+
 			}
 
 		});
@@ -81,7 +85,7 @@ function init(arr){
 		$(".pagination a").eq(0).addClass("active");
 
 	}
-
+	// $(".pagination a").eq(0).addClass("active");
 }
 
 
