@@ -54,12 +54,12 @@ body{
     border-bottom: 1px solid #eaeaea;
   }
   
-  /*  Edit to add back +11 immediately after n  */
+  /*  Edit to add back +11 immediately after n    
   .student-item.cf:nth-of-type(n+11) {
     display: none;
   }
 
- /* Opposite of 'none' is 'block'? */
+*/
  
 
     .student-details{

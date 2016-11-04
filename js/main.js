@@ -1,10 +1,12 @@
+//search() is called and no results are displayed after paginate(searchResultArray) is returned
+	//pagination elements are correctly made after search() is called, but results are not displayed
+
+//on click of any anchor element, including 1, results are displayed properly
+
+
 var searchResultArray = [];
 
 var numShownElements = [];
-
-// var startIndex;
-
-// var endIndex;
 
 
 $(function(){
@@ -18,11 +20,11 @@ $(function(){
 });
 
 
-function init(arr){
+function paginate(arr, page){
+
 
 	if (searchResultArray.length === 0){
 
-		//EDIT SO THAT BOTH POSSIBILITIES OF numShownElements ARE ARRAYS POPULATED WITH INDEX NUMBERS
 		for(var a = 0; a < $(".student-list").children().length; a++){
 			
 			numShownElements.push(a);
@@ -35,7 +37,7 @@ function init(arr){
 
 	}
 
-	var initCount = 0;
+	// var displayCount = 0;
 
 	var lastPageNumber;
 	var currentPageNumber = 1;
@@ -56,6 +58,9 @@ function init(arr){
 
 		$(".pagination").append($pageUl);
 
+		
+		//ONLY REMAINING ISSUE IS THAT SEARCH RESULTS ARE ALL DISPLAYED IN A SINGLE PAGE - 
+			//CLICKING ANCHOR WORKS THOUGH
 		$anchorItem.click(showTen);
 
 		$listItem.appendTo($pageUl);
@@ -63,32 +68,36 @@ function init(arr){
 
 	}
 
-		//ONLY REMAINING ISSUE IS THAT SEARCH RESULTS ARE ALL DISPLAYED IN A SINGLE PAGE - 
-			//CLICKING ANCHOR WORKS THOUGH
-			//NEED FUNCTION TO INIT FIRST 10 (SEARCH) ELEMENTS OR CODE FOR IT HERE?
-					
 
-		//Displaying first 10 elements should not be within the for loop
+//Does not work for the issue it should solve
 
-			// $('.student-list').children().eq(numShownElements[i]).show();
-			// initCount++;
+	// if (searchResultArray.length < ('student-list').children().length){
+		
+	// 	displayCount++;
 
-			// if(initCount > 10){
+	// 	if(displayCount > 10){
 
-			// 	//ISSUE HERE? on init after search, isn't displaying search results, does on click of 1 though
-			// 	$(".student-list li").eq(numShownElements[i]).hide();
+	// 		//need to also hide elements less than i  - this needs to be index filtered to count to 10
+	// 		$(".student-list li").eq(numShownElements[i]).hide();
 				
-			// }
+	// 	}
+	// } else{
+
+	// 	while(displayCount < 10){
+
+	// 		$(".student-list li").eq(numShownElements[i]).show();
+	// 		displayCount++;
+		
+	// 	}
+	// }
+
+
 
 	$(".pagination a").eq(0).addClass("active");
+
 }
 
-
-
-
 function showTen(){
-
-	var displayCount = 0;
 
 	var currentPageNumber = parseInt($(this).text());
 
@@ -104,29 +113,20 @@ function showTen(){
 
 	$('.student-list').children().hide();
 
-	for(var i = 0; i < numShownElements.length; i++){
+	for(var i = 0; i < numShownElements.length; i++){ 
 			
 		console.log(startIndex + " " + endIndex);
 		if(i >= startIndex && i < endIndex){
 
 			console.log(numShownElements[i]);
 
-			//ISSUE IS HERE
 			$('.student-list').children().eq(numShownElements[i]).show();
-			displayCount++;
-
-			if(displayCount > 10){
-
-				//ISSUE HERE? on init after search, isn't displaying search results, does on click of 1 though
-				$(".student-list li").eq(numShownElements[i]).hide();
-				
-			}
 		}
 	}
 }
 
 
-function search(){
+function search(e){
 
 	//Issue going from selected page '$(this)' to search() results, e.g. user clicks page 3 then searches
 		//Post search() function call, not all items are being hidden? Too many are being shown?
@@ -158,8 +158,8 @@ function search(){
 
 	console.log("Search result count is " + searchResultArray.length);
 
-	return init(searchResultArray);
+	return paginate(searchResultArray, 1); 
 
 }
 
-init();
+paginate();
