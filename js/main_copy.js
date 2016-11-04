@@ -66,8 +66,8 @@ function createLinks(list){
 		$anchorItem = $('<a href="#">' + (j+1) + '</a>');
 
 		//bind click handler to search() on anchor elements, $(this) isn't passing?
-			// $anchorItem.click(function(){ paginate(list, parseInt($(this).text())); });
-		$anchorItem.click(paginate);
+			$anchorItem.click(function(){ paginate(list, parseInt($(this).text())); });
+		// $anchorItem.click(paginate);
 
 		$listItem.appendTo($pageUl);
 		$anchorItem.appendTo($listItem);
