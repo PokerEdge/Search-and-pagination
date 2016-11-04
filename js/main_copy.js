@@ -73,9 +73,6 @@ function createLinks(list){
 
 	}
 
- //    //give class 'active' to page anchor element 1
-	// $(".pagination a").eq(0).addClass("active");
-
 }
 
 
@@ -100,8 +97,7 @@ function search(e){
 	    if($userNames.eq(i).text().toLowerCase().indexOf($input.val().toLowerCase()) !== -1 || $emails.eq(i).text().toLowerCase().indexOf($input.val().toLowerCase()) !== -1){
 	        
 	        //Not being registered... somehow..., though for loop is passing values correctly
-	      	searchResultArray.push($('.student-item').eq(i));
-	      	// searchResultArray.push(i);
+	      	searchResultArray.push(i);
 
 	    }
 
