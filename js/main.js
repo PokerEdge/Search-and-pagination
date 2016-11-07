@@ -119,10 +119,13 @@ function search(e){
 	//Hide message for when user begins new search after "No results shown" message has been shown
 	$('.message').hide();
 
+	//
 	for(var i = 0; i < $(".student-item").length; i++){
 
+		//Condition to check if non-case sensitive version of user input exists as a piece of all student-items
 	    if($userNames.eq(i).text().toLowerCase().indexOf($input.val().toLowerCase()) !== -1 || $emails.eq(i).text().toLowerCase().indexOf($input.val().toLowerCase()) !== -1){
 	        
+	        //searchResultArray gets the index element 'i' that passed the above condition
 	      	searchResultArray.push(i);
 
 	    }
